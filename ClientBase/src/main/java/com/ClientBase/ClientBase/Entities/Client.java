@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Client {
-    private String firstName;
-    private String lastName;
-    private String pesel;
-    private String address;
-    private String City;
-    private String representativeLastName;
+    private Integer ClientId;
+    private String FirstName;
+    private String LastName;
+    private String Pesel;
+    private Integer RepresentativeId;
+    private String Address;
+    private String PostalCode;
+    private Integer CityId;
 }

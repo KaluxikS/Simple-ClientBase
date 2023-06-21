@@ -1,4 +1,4 @@
-package com.ClientBase.ClientBase;
+package com.ClientBase.ClientBase.Repositories;
 
 import com.ClientBase.ClientBase.DTOs.ClientDto;
 import org.springframework.beans.factory.annotation.Autowired;

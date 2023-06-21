@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Country {
-    private Integer CountryId;
+public class Department {
+    private Integer DepartmentId;
     private String Name;
+    private Integer CityId;
 }
