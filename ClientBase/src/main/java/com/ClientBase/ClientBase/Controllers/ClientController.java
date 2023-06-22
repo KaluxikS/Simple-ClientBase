@@ -1,9 +1,11 @@
 package com.ClientBase.ClientBase.Controllers;
 
+import com.ClientBase.ClientBase.Entities.City;
 import com.ClientBase.ClientBase.Repositories.ClientRepository;
 import com.ClientBase.ClientBase.DTOs.ClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,17 +17,18 @@ public class ClientController {
     ClientRepository clientRepository;
 
     @GetMapping("/clients")
-    public List<ClientDto> getAll(){
-        return clientRepository.getAll();
+    public List<ClientDto> getAllClients(){
+        return clientRepository.getAllClients();
     }
 
-    @GetMapping("/test")
-    public int test1(){
-        return 1;
+    @GetMapping("/getCities")
+    public List<City> getCities() {
+        return clientRepository.getAllCities();
     }
 
-    @GetMapping("/admin")
-    public int test(){
-        return 1;
+    @PostMapping("/addClient") //to make
+    public String showAddClientForm(ClientDto clientDto) {
+        clientRepository.addClient(clientDto);
+        return "add-client-form";
     }
 }
