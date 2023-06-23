@@ -1,11 +1,14 @@
 package com.ClientBase.ClientBase.Controllers;
 
+import com.ClientBase.ClientBase.DTOs.ClientAddDto;
 import com.ClientBase.ClientBase.Entities.City;
+import com.ClientBase.ClientBase.Entities.Client;
 import com.ClientBase.ClientBase.Repositories.ClientRepository;
 import com.ClientBase.ClientBase.DTOs.ClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,9 +29,9 @@ public class ClientController {
         return clientRepository.getAllCities();
     }
 
-    @PostMapping("/addClient") //to make
-    public String showAddClientForm(ClientDto clientDto) {
-        clientRepository.addClient(clientDto);
-        return "add-client-form";
+    @PostMapping("/addClient")
+    public String showAddClientForm(@RequestBody ClientAddDto clientAddDto) {
+        clientRepository.addClient(clientAddDto);
+        return "Client Added successfully!";
     }
 }
