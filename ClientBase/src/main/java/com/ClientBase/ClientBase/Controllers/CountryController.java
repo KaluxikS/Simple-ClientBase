@@ -1,38 +1,36 @@
 package com.ClientBase.ClientBase.Controllers;
-
-import com.ClientBase.ClientBase.Entities.City;
 import com.ClientBase.ClientBase.Entities.Country;
 import com.ClientBase.ClientBase.Repositories.AdminRepository;
+import com.ClientBase.ClientBase.Repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 @RestController
-public class AdminController {
+public class CountryController {
 
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    CountryRepository countryRepository;
 
-    @PostMapping("/admin/addCity")
-    public String addCity(@RequestBody City city) {
-        if (adminRepository.checkIfExists("City", "Name", city.getName())) {
-            return "City already exists in the database";
-        } else {
-            adminRepository.addCity(city);
-            return "City added successfully";
-        }
-    }
 
     @PostMapping("/admin/addCountry")
     public String addCountry(@RequestBody Country country){
         if (adminRepository.checkIfExists("Country", "Name", country.getName())){
             return "Country already exists in the database";
         } else {
-            adminRepository.addCountry(country);
+            countryRepository.addCountry(country);
             return "Country added succesfully";
         }
     }
 
+    @GetMapping("/allCountries")
+    public List<Country> getAllCountires(){
+        return countryRepository.allCountries();
+    }
 }

@@ -2,7 +2,6 @@ package com.ClientBase.ClientBase.Repositories;
 
 import com.ClientBase.ClientBase.DTOs.ClientAddDto;
 import com.ClientBase.ClientBase.DTOs.ClientDto;
-import com.ClientBase.ClientBase.Entities.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +16,10 @@ public class ClientRepository {
     JdbcTemplate jdbcTemplate;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    CityRepository cityRepository;
+    @Autowired
+    RepresentativeRepository representativeRepository;
 
 
 
@@ -29,11 +32,6 @@ public class ClientRepository {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ClientDto.class));
     }
 
-    public List<City> getAllCities() {
-        String sql = "SELECT * FROM City";
-        return jdbcTemplate.query(sql, (rs, rowNum) ->
-                new City(rs.getInt("CityId"), rs.getString("Name"), rs.getInt("CountryId")));
-    }
 
     public void addClient(ClientAddDto clientAddDto) {
 
@@ -42,14 +40,14 @@ public class ClientRepository {
             throw new IllegalArgumentException("City does not exist in the database");
         }
 
-        int cityId = adminRepository.getCityIdByName(clientAddDto.getCity());
+        int cityId = cityRepository.getCityIdByName(clientAddDto.getCity());
 
         boolean representativeExists = adminRepository.checkIfExists("Representative", "LastName", clientAddDto.getRepresentativeLastName());
         if (!representativeExists) {
             throw new IllegalArgumentException("Representative does not exist in the database");
         }
 
-        int representativeId = adminRepository.getRepresentativeIdByLastName(clientAddDto.getRepresentativeLastName());
+        int representativeId = representativeRepository.getRepresentativeIdByLastName(clientAddDto.getRepresentativeLastName());
 
         String sql = "INSERT INTO Client (FirstName, LastName, PESEL, RepresentativeId, Address, PostalCode, CityId) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, clientAddDto.getFirstName(), clientAddDto.getLastName(), clientAddDto.getPesel(), representativeId, clientAddDto.getAddress(), clientAddDto.getPostalcode(), cityId);
