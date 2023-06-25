@@ -21,13 +21,10 @@ public class CityController {
 
     @PostMapping("/admin/addCity")
     public String addCity(@RequestBody City city) {
-        if (adminRepository.checkIfExists("City", "Name", city.getName())) {
-            return "City already exists in the database";
-        } else {
-            cityRepository.addCity(city);
-            return "City added successfully";
-        }
+        cityRepository.addCity(city);
+        return "City added successfully";
     }
+
 
     @GetMapping("/getCities")
     public List<City> getCities() {
