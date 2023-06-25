@@ -10,9 +10,15 @@ import java.util.List;
 public class CountryRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    AdminRepository adminRepository;
+
 
     public void addCountry(Country country){
         String sql = "INSERT INTO Country (Name) VALUES (?)";
+        if (adminRepository.checkIfExists("Country", "Name", country.getName())){
+            throw new IllegalArgumentException("Country already exists in the database!");
+        }
         jdbcTemplate.update(sql, country.getName());
     }
 

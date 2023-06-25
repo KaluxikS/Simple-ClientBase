@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -51,8 +53,14 @@ public class ClientRepository {
 
         String sql = "INSERT INTO Client (FirstName, LastName, PESEL, RepresentativeId, Address, PostalCode, CityId) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, clientAddDto.getFirstName(), clientAddDto.getLastName(), clientAddDto.getPesel(), representativeId, clientAddDto.getAddress(), clientAddDto.getPostalcode(), cityId);
+
+        String queryForId = "Select max(clientId) From Client";
+
+        int idClient = jdbcTemplate.queryForObject(queryForId, Integer.class);
+
+        LocalDate date = LocalDate.now();
+
+        String sql2 = "INSERT INTO ClientStatus(ClientId, AcquisitionDate, StatusId) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql2, idClient, date, 1);
     }
-
-
-
 }

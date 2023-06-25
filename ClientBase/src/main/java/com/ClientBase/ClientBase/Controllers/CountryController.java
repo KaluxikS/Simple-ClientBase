@@ -21,12 +21,8 @@ public class CountryController {
 
     @PostMapping("/admin/addCountry")
     public String addCountry(@RequestBody Country country){
-        if (adminRepository.checkIfExists("Country", "Name", country.getName())){
-            return "Country already exists in the database";
-        } else {
             countryRepository.addCountry(country);
             return "Country added succesfully";
-        }
     }
 
     @GetMapping("/allCountries")
