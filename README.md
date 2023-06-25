@@ -1,5 +1,5 @@
 # Simple-ClientBase
-CRUD aplication, with back-end only. Uses technologies like: Spring Boot, Meaven, Lombok, Docker, MySqlWorkBench, PostMan. <Still under development>
+CRUD application, with back-end only. Uses technologies like: Spring Boot, Meaven, Lombok, Docker, MySqlWorkBench, PostMan. <Still under development>
 
 Data-Structure
 ---
